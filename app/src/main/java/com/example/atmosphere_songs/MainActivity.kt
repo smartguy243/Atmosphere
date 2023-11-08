@@ -1,16 +1,11 @@
 package com.example.atmosphere_songs
 
 import android.os.Bundle
-import android.support.v4.app.INotificationSideChannel.Default
-import android.widget.ImageButton
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.EaseInCirc
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,9 +17,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.BottomAppBar
@@ -43,20 +37,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.DefaultAlpha
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.blue
 import com.example.atmosphere_songs.ui.theme.Atmosphere_SongsTheme
 
 class MainActivity : ComponentActivity() {
@@ -65,7 +53,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Atmosphere_SongsTheme{
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = Color.Black
+                    modifier = Modifier.fillMaxSize(), color = Color.White
                 ) {
                     ScaffoldCompose()
 
@@ -79,8 +67,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ScaffoldCompose() {
 
-    Scaffold(topBar = {TopAppBarCompose() },
-        bottomBar = {BottomAppBarCompose() })
+    Scaffold(
+        topBar = {TopAppBarCompose() },
+        bottomBar = {BottomAppBarCompose()}
+    )
 
     { innerPadding ->
 
@@ -95,7 +85,7 @@ fun ScaffoldCompose() {
 
                 Spacer(modifier = Modifier
                     .padding()
-                    .padding(top = 10.dp)
+                    .padding(top = 0.dp)
                     .height(0.dp))
 
                 Card(elevation = cardElevation(defaultElevation = 4.dp)) {
@@ -103,7 +93,7 @@ fun ScaffoldCompose() {
                         modifier = Modifier
                             .background(Color.White)
                             .fillMaxWidth()
-                            .requiredHeight(35.dp)
+                            .requiredHeight(40.dp)
                     ) {
                         Row {
                             Image(modifier = Modifier
@@ -115,26 +105,26 @@ fun ScaffoldCompose() {
                             Text(modifier = Modifier
                                 .padding(top = 7.dp),
                                 text = "Search songs...",
-                                color = Color.DarkGray.copy(alpha = 0.7f))
+                                fontWeight = FontWeight.W600,
+                                color = Color.DarkGray.copy(alpha = 0.5f))
                         }
 
                     }
 
                 }
                 Spacer(modifier = Modifier
-                    .padding(bottom = 5.dp))
+                    .padding(bottom = 4.dp))
 
                 Card(elevation = cardElevation(defaultElevation = 4.dp)) {
 
                     LazyColumn(
                         modifier = Modifier
                             .background(Color.White)
-                            .padding(bottom = 90.dp)
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        val songs = 15
+                        val songs = 20
                         items(songs) { song ->
                             SongsListCard(songs)
                         }
@@ -153,8 +143,7 @@ fun ScaffoldCompose() {
         Card(elevation = cardElevation(defaultElevation = 2.dp)) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(modifier = Modifier.width(30.dp))
@@ -252,17 +241,20 @@ fun SongsListCard(song: Int) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
+                .padding(11.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.width(5.dp))
             Text(text = "001   ",
-                fontSize = 12.sp)
+                fontSize = 12.sp,
+                fontWeight = FontWeight.W500)
             Text(text = "LUBWEWE LWA BIKONDO (D)",
-                fontSize = 12.sp)
+                fontSize = 12.sp,
+                fontWeight = FontWeight.W500)
         }
 
-    Divider()
+    Divider(modifier = Modifier
+        .padding(bottom = 9.dp))
 
 }
 
@@ -285,13 +277,14 @@ fun TopAppBarCompose() {
         navigationIcon = {
             IconButton(onClick = {},
                 modifier = Modifier
-                    .scale(0.7f)
+                    .scale(0.8f)
                     .padding(start = 7.dp)
-                    .shadow(
-                        elevation = 1.dp,
-                        shape = RectangleShape,
+                    .shadow(spotColor = Color.White,
+                        elevation = 3.dp,
+                        shape = RoundedCornerShape(8.dp),
                     ),
-            ) {           Icon(
+            ) {
+                Icon (
                 Icons.Default.Menu,
                 contentDescription = "icon_menu")
             }
@@ -299,10 +292,10 @@ fun TopAppBarCompose() {
         actions = {
             IconButton(onClick = {},
                 modifier = Modifier
-                    .scale(0.7f)
-                    .shadow(
+                    .scale(0.8f)
+                    .shadow(spotColor = Color.White,
                         elevation = 1.dp,
-                        shape = RectangleShape
+                        shape = RoundedCornerShape(8.dp)
                     ),
             ) {
                 Icon(
@@ -314,11 +307,12 @@ fun TopAppBarCompose() {
 
             IconButton(onClick = {},
                 modifier = Modifier
-                    .scale(0.7f)
+                    .background(Color.White)
+                    .scale(0.8f)
                     .padding(end = 7.dp)
-                    .shadow(
+                    .shadow(spotColor = Color.White,
                         elevation = 1.dp,
-                        shape = RectangleShape,
+                        shape = RoundedCornerShape(8.dp),
                     ),
             )
 
@@ -381,22 +375,5 @@ fun BottomAppBarCompose() {
 
             }
         }
-    }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Atmosphere_SongsTheme {
-        Greeting("Android")
     }
 }
