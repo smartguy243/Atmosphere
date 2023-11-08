@@ -1,12 +1,16 @@
 package com.example.atmosphere_songs
 
 import android.os.Bundle
+import android.support.v4.app.INotificationSideChannel.Default
 import android.widget.ImageButton
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.EaseInCirc
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +23,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -38,10 +43,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.res.painterResource
@@ -58,7 +65,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Atmosphere_SongsTheme{
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = Color.Black
                 ) {
                     ScaffoldCompose()
 
@@ -80,51 +87,54 @@ fun ScaffoldCompose() {
         Card(elevation = cardElevation(defaultElevation = 5.dp)) {
             Column(
                 modifier = Modifier
+                    .padding(innerPadding)
                     .padding(start = 1.dp, top = 1.dp, end = 1.dp, bottom = 1.dp)
                     .fillMaxSize()
                     .padding(3.dp)
             ) {
 
                 Spacer(modifier = Modifier
-                    .padding(innerPadding)
+                    .padding()
                     .padding(top = 10.dp)
                     .height(0.dp))
 
                 Card(elevation = cardElevation(defaultElevation = 4.dp)) {
                     Column (
                         modifier = Modifier
+                            .background(Color.White)
                             .fillMaxWidth()
-                            .requiredHeight(45.dp)
+                            .requiredHeight(35.dp)
                     ) {
                         Row {
                             Image(modifier = Modifier
-                                .padding(start = 7.dp, top = 12.dp, end = 5.dp),
+                                .padding(start = 7.dp, top = 8.dp, end = 5.dp),
                                 painter = painterResource(id = R.drawable.icon_search),
-                                contentDescription = ""
+                                contentDescription = "icon_search",
+                                colorFilter = ColorFilter.tint(color = Color.DarkGray.copy(alpha = 0.4f))
                             )
                             Text(modifier = Modifier
-                                .padding(top = 11.dp),
+                                .padding(top = 7.dp),
                                 text = "Search songs...",
                                 color = Color.DarkGray.copy(alpha = 0.7f))
                         }
 
                     }
 
-                    Divider(modifier = Modifier
-                        .padding(bottom = 10.dp))
                 }
+                Spacer(modifier = Modifier
+                    .padding(bottom = 5.dp))
 
                 Card(elevation = cardElevation(defaultElevation = 4.dp)) {
 
                     LazyColumn(
                         modifier = Modifier
+                            .background(Color.White)
                             .padding(bottom = 90.dp)
-                            .fillMaxWidth()
-                            .weight(0.1f),
+                            .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        val songs = 10
+                        val songs = 15
                         items(songs) { song ->
                             SongsListCard(songs)
                         }
@@ -246,10 +256,10 @@ fun SongsListCard(song: Int) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(modifier = Modifier.width(5.dp))
-            Text(text = "id  ",
-                fontSize = 20.sp)
-            Text(text = "Song",
-                fontSize = 20.sp)
+            Text(text = "001   ",
+                fontSize = 12.sp)
+            Text(text = "LUBWEWE LWA BIKONDO (D)",
+                fontSize = 12.sp)
         }
 
     Divider()
